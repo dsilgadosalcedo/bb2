@@ -1,0 +1,109 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro"
+import ClassificationMap from "../../components/ClassificationMap.astro"
+import Information from "../../components/Information.astro"
+import Images from "../../components/Images.astro"
+import { Map } from "../../components/interactive/Map"
+import { fetchGbif, getImages, getKey } from "../../scripts/utils"
+
+export const prerender =  false
+
+const { key } = Astro.params
+
+let species
+let images
+let descriptions
+let distributions
+let profiles
+let references
+if (key) {
+  species = await fetchGbif({ key })
+
+  const keyName = getKey({ object: species, addNameKey: true })
+  images = await getImages({ key: keyName })
+
+  descriptions = await fetchGbif({ key: `${key}/descriptions` }).then(res => res.results)
+  distributions = await fetchGbif({ key: `${key}/distributions` }).then(res => res.results)
+  profiles = await fetchGbif({ key: `${key}/speciesProfiles` }).then(res => res.results)
+  references = await fetchGbif({ key: `${key}/references` }).then(res => res.results)
+}
+---
+<BaseLayout title={species.species} species>
+  <section class="grid grid-col-1 lg:grid-cols-4 gap-4 lg:gap-6 px-4 lg:px-0 md:mx-16 md:mb-6 sm:[&>div]:border-2 [&>div]:border-bb2-100 [&>div]:rounded-3xl [&>div]:backdrop-blur-md [&>div]:bg-opacity-60 [&>div]:bg-bb2-400 [&>div]:shadow-lg [&>div]:shadow-bb2-200">
+    <div class="lg:[grid-column:1/2] p-4">
+      <ClassificationMap {species} />
+    </div>
+    <div class="lg:[grid-column:2/4] h-[500px] pb-4 overflow-hidden">
+      <Information {descriptions} {distributions} {profiles} />
+    </div>
+    <div class="lg:[grid-column:4/5] h-[500px] pb-4 px-4 overflow-y-scroll results results-v">
+      <div class="p-2 rounded-b-2xl bg-bb2-400 border-x-2 border-b-2 border-bb2-100 text-bb2-100 mx-auto w-fit">
+        Menciones
+      </div>
+      {
+        references &&
+        <ul class="flex flex-col gap-4 mt-4 pl-2">
+          {
+            references.map((ref) => (
+              <li class="flex relative py-4 pr-4 pl-4 hover:pl-0 cursor-pointer  [&>article]:hover:translate-y-1 [&>article]:transition [&>article]:hover:text-white [&>article]:hover:border-bb2-100 [&>article]:hover:gap-4 [&>article]:hover:min-h-44 [&>article]:hover:h-auto [&>article>span]:line-clamp-5 [&>article>span]:hover:line-clamp-none [&>article>p]:hover:flex [&>div]:hover:border-bb2-100">
+                <article class="h-44 p-4 flex flex-grow flex-col items-center justify-between overflow-hidden rounded-2xl border-2 border-bb2-200 bg-bb2-400 text-bb2-100 text-center">
+                  <span class="text-sm break-words">
+                    {ref.source}
+                  </span>
+                  <p class="text-sm break-words text-bb2-100 hidden">
+                    {ref.citation}
+                  </p>
+                  <span class="text-sm font-medium text-gray-100 bg-bb2-300 px-2 py-1 rounded-full w-fit">
+                    {ref.type ? ref.type : "-" }
+                  </span>
+                </article>
+                <div class="w-full h-44 rounded-2xl absolute -z-10 border-2 border-bb2-200 top-1 -left-2"></div>
+              </li>
+            ))
+          }
+          {
+            references.length == 0 &&
+            <li>Sin menciones registradas</li>
+          }
+        </ul>
+      }
+    </div>
+    <div class="lg:[grid-column:1/4] overflow-x-scroll results results-h flex items-center justify-center p-4">
+      <Images {images} />
+    </div>
+    <Map width="w-full"  description={false} keyValue={key} />
+  </section>
+</BaseLayout>
+
+<style is:global>
+  :root {
+  --bb2-100 : #c5d9e9;
+	--bb2-200 : #7aa6cc;
+}
+
+@media (min-width: 576px) {
+  .results::-webkit-scrollbar {
+    background-color: transparent;
+  }
+
+  .results-h::-webkit-scrollbar {
+    height: 12px;
+  }
+  .results-v::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  .results::-webkit-scrollbar-thumb {
+    background-color: var(--bb2-200);
+    border-radius: 6px;
+  }
+
+  .results::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  .results::-webkit-scrollbar-button {
+    display: block;
+  }
+}
+</style>

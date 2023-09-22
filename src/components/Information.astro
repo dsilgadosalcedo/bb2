@@ -1,0 +1,158 @@
+---
+const { descriptions, distributions, profiles } = Astro.props
+
+const unknownAttributes = []
+
+profiles.map(profile => {
+  for (const key in profile) {
+    if (key !== "taxonKey" && key !== "source" && key !== "sourceTaxonKey") {
+      unknownAttributes.push(key)
+    }
+  }
+})
+
+---
+<div class="flex gap-2 p-4 shadow-md">
+  <button type="button" name="profiles" class="information-button text-bb2-100 text-sm hover:text-white border-2 hover:border-white transition cursor-pointer px-2 rounded-full border-bb2-100 text-white border-white">Perfiles</button>
+  <button type="button" name="descriptions" class="information-button text-bb2-100 text-sm hover:text-white border-2 hover:border-white transition cursor-pointer px-2 rounded-full border-bb2-100">Descripciones</button>
+  <button type="button" name="distributions" class="information-button text-bb2-100 text-sm hover:text-white border-2 hover:border-white transition cursor-pointer px-2 rounded-full border-bb2-100">Localización</button>
+</div>
+<div class="results results-v overflow-y-scroll h-[500px] pt-4 px-4">
+  <ul id="profiles" class="list-information flex flex-col gap-4">
+    {
+      profiles.map((profile, index) => 
+        <li class="p-4 bg-bb2-200/20 rounded-2xl">
+          {
+            <span class="text-sm font-medium text-gray-100 bg-bb2-300 px-2 py-1 rounded-full w-fit">{unknownAttributes[index].charAt(0).toUpperCase() + unknownAttributes[index].slice(1)}</span>
+          }
+
+          {
+            profile[unknownAttributes[index]] &&
+            <p class="pl-2 mt-1 leading-tight">
+              {
+              profile[unknownAttributes[index]] === true ? "Sí" : 
+              profile[unknownAttributes[index]] === false ? "No" :
+              profile[unknownAttributes[index]]
+              }
+            </p>
+          }
+
+          {
+            profile.source &&
+            <div class="text-bb2-100 mt-2 flex justify-end relative">
+              <p class="text-sm text-end">{profile.source}</p>
+              <div class="-translate-y-2">
+              <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M10 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"></path>
+                <path d="M19 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"></path>
+              </svg>
+              </div>
+            </div>
+          }
+        </li>
+      )
+    }
+    {
+      profiles.length == 0 &&
+      <li>Sin perfiles registrados</li>
+    }
+  </ul>
+  <ul id="descriptions" class="list-information flex flex-col gap-4 hidden">
+    {
+      descriptions.map((desc) => 
+        <li class="p-4 bg-bb2-200/20 rounded-2xl">
+          {
+            desc.type &&
+            <span class="text-sm font-medium text-gray-100 bg-bb2-300 px-2 py-1 rounded-full w-fit">{desc.type}</span>
+          }
+
+          {
+            desc.description &&
+            <p class="pl-2 mt-1 leading-tight">{desc.description}</p>
+          }
+
+          {
+            desc.source &&
+            <div class="text-bb2-100 mt-2 flex justify-end relative">
+              <p class="text-sm text-end">{desc.source}</p>
+              <div class="-translate-y-2">
+              <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M10 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"></path>
+                <path d="M19 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"></path>
+              </svg>
+              </div>
+            </div>
+          }
+        </li>
+      )
+    }
+    {
+      descriptions.length == 0 &&
+      <li>Sin descripciones registradas</li>
+    }
+  </ul>
+  <ul id="distributions" class="list-information flex flex-col gap-4 hidden">
+    {
+      distributions.map((dist) => 
+        <li class="p-4 bg-bb2-200/20 rounded-2xl">
+          {
+            dist.locationId &&
+            <span class="text-sm font-medium text-gray-100 bg-bb2-300 px-2 py-1 rounded-full w-fit">{dist.locationId}</span>
+          }
+
+          {
+            dist.locality &&
+            <p class="pl-2 mt-1 leading-tight">{dist.locality}</p>
+          }
+
+          {
+            dist.source &&
+            
+            <div class="text-bb2-100 mt-2 flex justify-end relative">
+              <p class="text-sm text-end">
+                {dist.source}
+              </p>
+              <div class="-translate-y-2">
+                <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M10 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"></path>
+                  <path d="M19 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"></path>
+                </svg>
+              </div>
+            </div>
+          }
+        </li>
+      )
+    }
+    {
+      distributions.length == 0 &&
+      <li>Sin localizaciones registradas</li>
+    }
+  </ul>
+  <div class="h-20 w-full"></div>
+</div>
+
+<script is:inline>
+  const buttons = document.querySelectorAll('.information-button')
+  const infoList = document.querySelectorAll('.list-information')
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      infoList.forEach(list => {
+        list.classList.add('hidden')
+        if (list.getAttribute('id') === button.getAttribute('name')) {
+          list.classList.remove('hidden')
+        }
+      })
+
+      buttons.forEach(b => {
+        b.classList.remove('text-white')
+        b.classList.remove('border-white')
+      })
+      button.classList.add('text-white')
+      button.classList.add('border-white')
+    })
+  })
+</script>

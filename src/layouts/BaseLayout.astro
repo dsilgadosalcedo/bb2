@@ -1,0 +1,78 @@
+---
+import { ViewTransitions } from 'astro:transitions'
+import { Image } from 'astro:assets'
+import backgroundImage from '../assets/background.jpg'
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
+import { SEO } from 'astro-seo'
+
+const { title, species } = Astro.props
+
+let pageTitle = "BB2"
+if (title) {
+  pageTitle += ` - ${title}`
+}
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString()
+
+const resolvedImageWithDomain = new URL(
+  "/shot.jpg",
+  Astro.site
+).toString()
+---
+
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.png" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+    <SEO
+      title={pageTitle}
+      description="Este Buscador de biodiversidad biológica proporciona información sobre nombres comunes, científicos, distribución, hábitat, amenazas y mucho más."
+      canonical={canonicalURL}
+      openGraph={{
+        basic: {
+          title: "BB2 - Buscador de Biodiversidad",
+          url: canonicalURL,
+          type: "website",
+          image: resolvedImageWithDomain,
+        },
+        image: {
+          alt: "BB2 homepage screenshot",
+        },
+      }}
+      twitter={{
+        creator: "@dsilgadosalcedo"
+      }}
+    />
+		<!-- <ViewTransitions /> -->
+	</head>
+	<body class="bg-gradient-to-b from-bb2-500 to-bb2-300 [min-height:100dvh] flex flex-col text-white font-spline-normal">
+    <Image src={backgroundImage} alt="Forest illustration" class="w-full h-full fixed top-0 object-bottom object-cover -z-10"/>
+		<Header species={species && title}/>
+		<main class="flex flex-col flex-grow">
+      <slot />
+    </main>
+		<Footer/>
+	</body>
+</html>
+
+<style is:global>
+  * {
+    box-sizing: border-box;
+  }
+
+  @font-face {
+    font-family: 'MonoDisplay-normal';
+    src: url('/fonts/MajorMonoDisplay-Regular.ttf');
+    font—weight: normal;
+  }
+
+  @font-face {
+    font-family: 'SplineSans-normal';
+    src: url('/fonts/SplineSans-Regular.ttf');
+    font-weight: 400;
+  }
+</style>

@@ -1,0 +1,21 @@
+---
+import { Image } from "astro:assets"
+
+const { images } = Astro.props
+---
+<ul class="h-full flex gap-2 items-center">
+  {
+    images?.map((image) => (
+      <Image 
+        src={image}
+        alt="image"
+        width=224
+        height=224
+        class="h-56 rounded-lg"
+        quality="low"
+        loading="lazy"
+        decoding="async"
+      />
+    ))
+  }
+</ul>

@@ -1,0 +1,14 @@
+---
+const { species } = Astro.props
+---
+<header class="text-center py-4">
+  <a href="/" class:list={["text-xl font-mono transition text-white", {"[&>span]:hover:text-bb2-100 [&>span]:hover:transition" : species}, {"hover:text-bb2-100" : !species}]}>
+    {
+      species ? 
+      <span class="inline-block">BB2&nbsp;</span>
+      <p class="inline-block">- {species}</p>
+      :
+      "BB2 - Buscador de Biodiversidad"
+    }
+  </a>
+</header>

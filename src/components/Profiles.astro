@@ -1,0 +1,112 @@
+---
+
+---
+<ul id="profiles" class="list-information flex flex-col gap-4">
+  {
+    profiles.map((profile, index) => 
+      <li class="p-4 bg-bb2-200/20 rounded-2xl">
+        {
+          <span class="text-sm font-medium text-gray-100 bg-bb2-300 px-2 py-1 rounded-full w-fit">{unknownAttributes[index].charAt(0).toUpperCase() + unknownAttributes[index].slice(1)}</span>
+        }
+
+        {
+          profile[unknownAttributes[index]] &&
+          <p class="pl-2 mt-1 leading-tight">{
+            profile[unknownAttributes[index]].charAt(0).toUpperCase() + profile[unknownAttributes[index]].slice(1)
+          }</p>
+        }
+
+        {
+          profile.source &&
+          <div class="text-bb2-100 mt-2 flex justify-end relative">
+            <p class="text-sm text-end">{profile.source}</p>
+            <div class="-translate-y-2">
+            <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M10 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"></path>
+              <path d="M19 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"></path>
+            </svg>
+            </div>
+          </div>
+        }
+      </li>
+    )
+  }
+  {
+    descriptions.length == 0 &&
+    <li>Sin descripciones registradas</li>
+  }
+</ul>
+<ul id="descriptions" class="list-information flex flex-col gap-4 hidden">
+  {
+    descriptions.map((desc) => 
+      <li class="p-4 bg-bb2-200/20 rounded-2xl">
+        {
+          desc.type &&
+          <span class="text-sm font-medium text-gray-100 bg-bb2-300 px-2 py-1 rounded-full w-fit">{desc.type}</span>
+        }
+
+        {
+          desc.description &&
+          <p class="pl-2 mt-1 leading-tight">{desc.description}</p>
+        }
+
+        {
+          desc.source &&
+          <div class="text-bb2-100 mt-2 flex justify-end relative">
+            <p class="text-sm text-end">{desc.source}</p>
+            <div class="-translate-y-2">
+            <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M10 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"></path>
+              <path d="M19 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"></path>
+            </svg>
+            </div>
+          </div>
+        }
+      </li>
+    )
+  }
+  {
+    descriptions.length == 0 &&
+    <li>Sin descripciones registradas</li>
+  }
+</ul>
+<ul id="distributions" class="list-information flex flex-col gap-4 hidden">
+  {
+    distributions.map((dist) => 
+      <li class="p-4 bg-bb2-200/20 rounded-2xl">
+        {
+          dist.locationId &&
+          <span class="text-sm font-medium text-gray-100 bg-bb2-300 px-2 py-1 rounded-full w-fit">{dist.locationId}</span>
+        }
+
+        {
+          dist.locality &&
+          <p class="pl-2 mt-1 leading-tight">{dist.locality}</p>
+        }
+
+        {
+          dist.source &&
+          
+          <div class="text-bb2-100 mt-2 flex justify-end relative">
+            <p class="text-sm text-end">
+              {dist.source}
+            </p>
+            <div class="-translate-y-2">
+              <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M10 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"></path>
+                <path d="M19 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"></path>
+              </svg>
+            </div>
+          </div>
+        }
+      </li>
+    )
+  }
+  {
+    distributions.length == 0 &&
+    <li>Sin localizaciones registradas</li>
+  }
+</ul>

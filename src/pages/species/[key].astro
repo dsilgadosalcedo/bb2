@@ -22,13 +22,13 @@ if (key) {
   const keyName = getKey({ object: species, addNameKey: true })
   images = await getImages({ key: keyName })
 
-  descriptions = await fetchGbif({ key: `${key}/descriptions` }).then(res => res.results)
-  distributions = await fetchGbif({ key: `${key}/distributions` }).then(res => res.results)
-  profiles = await fetchGbif({ key: `${key}/speciesProfiles` }).then(res => res.results)
-  references = await fetchGbif({ key: `${key}/references` }).then(res => res.results)
+  descriptions = await fetchGbif({ key: `${key}/descriptions` }).then(res => res?.results)
+  distributions = await fetchGbif({ key: `${key}/distributions` }).then(res => res?.results)
+  profiles = await fetchGbif({ key: `${key}/speciesProfiles` }).then(res => res?.results)
+  references = await fetchGbif({ key: `${key}/references` }).then(res => res?.results)
 }
 ---
-<BaseLayout title={species.species} species>
+<BaseLayout title={species?.species} species>
   <section class="grid grid-col-1 lg:grid-cols-4 gap-4 lg:gap-6 px-4 lg:px-0 md:mx-16 md:mb-6 sm:[&>div]:border-2 [&>div]:border-bb2-100 [&>div]:rounded-3xl [&>div]:backdrop-blur-md [&>div]:bg-opacity-60 [&>div]:bg-bb2-400 [&>div]:shadow-lg [&>div]:shadow-bb2-200">
     <div class="lg:[grid-column:1/2] p-4">
       <ClassificationMap {species} />

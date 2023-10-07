@@ -56,7 +56,7 @@ export async function fetchGbif({ key, type = 'id' }) {
   try {
     const response = await fetch(url)
     if (!response.ok) {
-      throw new Error("Network response was not ok")
+      console.error("Network response was not ok")
     }
     const data = await response?.json()
       .then((result) => {
@@ -66,7 +66,7 @@ export async function fetchGbif({ key, type = 'id' }) {
       })
     return data
   } catch (error) {
-    throw error
+    console.error(error)
   }
 }
 
@@ -160,7 +160,7 @@ export function getKey({ object, addNameKey = false }) {
   let key
 
   for (const keyName of keyNames) {
-    if (object.hasOwnProperty(keyName)) {
+    if (object?.hasOwnProperty(keyName)) {
       key = object[keyName]
       name = keyName
       break

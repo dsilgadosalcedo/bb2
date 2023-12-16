@@ -18,7 +18,7 @@ export function Map({ width="w-full", height="h-full", description=true, keyValu
           <span id="map-status" class="font-splineSans-regular text-white hidden">Sin avistamientos registrados</span>
         </div>
       </div>
-      {description && <em id='species-name' class="text-2xl text-center text-bb2-white mt-20 font-splineSans-regular">-</em>}
+      {description && <em id='species-name' class="text-xl text-center text-bb2-white mt-12 font-splineSans-regular">-</em>}
     </section>
   )
 }

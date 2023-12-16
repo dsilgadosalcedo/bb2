@@ -1,7 +1,7 @@
 import { toggleHidden } from "../../scripts/utils"
 import { getKey } from "../../scripts/utils"
 
-export function Card({ data, image }) {
+export function Card ({ data, image }) {
   return (
     <a 
       class="flex flex-grow-0 justify-between h-20 bg-bb2-400 rounded-xl sm:hover:shadow-bb2-500 shadow-md transition-all cursor-pointer duration-200 hover:ease-in-out font-normal relative overflow-hidden result-card" 

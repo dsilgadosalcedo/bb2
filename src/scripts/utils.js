@@ -79,7 +79,8 @@ async function setCards({ results }) {
 
     const noAllowedRanks = ['SUBSPECIES', 'VARIETY', 'FORM', 'SUBGENUS', 'UNRANKED']
 
-    const cardComponent = <Card data={result} image={imageUrl[0]} />
+    const cardComponent = Card({data: result, image: imageUrl[0]})
+    // const cardComponent = <Card data={result} image={imageUrl[0]} />
     render(cardComponent, newContainer)
 
     if (!noAllowedRanks.includes(result.rank)) {
